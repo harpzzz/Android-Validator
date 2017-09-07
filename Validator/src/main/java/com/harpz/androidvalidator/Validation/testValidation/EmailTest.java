@@ -1,5 +1,6 @@
 package com.harpz.androidvalidator.Validation.testValidation;
 
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
 
@@ -11,28 +12,53 @@ public class EmailTest {
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-    public void checkValid(final EditText email){
+    public void checkValid(final EditText email, final String message, final TextInputLayout til){
 
         if(email != null) {
 
-            email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if(!hasFocus){
-                        final String check = email.getText().toString().trim();
+            if(til != null){
 
-                        if (!emailValidation(check)) {
-                            email.setError("Please Check Your email");
-                            email.requestFocus();
-                        } else {
-                            email.setError(null);
-                            email.setFocusable(false);
+                til.setErrorEnabled(false);
+                email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            final String check = email.getText().toString().trim();
+
+                            if (!emailValidation(check)) {
+                                til.setErrorEnabled(true);
+                                til.setError(message);
+                            } else {
+                                til.setError(null);
+                                til.setErrorEnabled(false);
+                            }
+
                         }
-
                     }
-                }
-            });
+                });
 
+            }else {
+
+                email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            final String check = email.getText().toString().trim();
+
+                            if (!emailValidation(check)) {
+                                email.setError(message);
+                            } else {
+                                email.setError(null);
+                            }
+
+                        }
+                    }
+                });
+            }
+
+        }else{
+
+            throw new NullPointerException("Validator : Field is null");
         }
 
     }

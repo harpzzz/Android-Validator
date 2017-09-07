@@ -9,4 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Name{
+    String message() default "Please enter the valid Name.";
+    int til() default -1;
 }

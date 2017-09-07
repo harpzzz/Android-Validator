@@ -11,14 +11,15 @@ import com.harpz.androidvalidator.Validation.validatorInterfaces.Password;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Email
+    @Email(message = "please chk",til = R.id.tilEmail)
     private EditText etEmail;
 
-    @Name
+    @Name(message = "Name is not valid", til = R.id.tilName)
     private EditText etName;
 
-    @Password
+    @Password(message = "Name is not valid", til = R.id.tilPassword)
     private EditText etPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.edPassword);
 
         Validator validator = new Validator();
-        validator.Validator(this);
+        validator.validate(this);
 
     }
 }

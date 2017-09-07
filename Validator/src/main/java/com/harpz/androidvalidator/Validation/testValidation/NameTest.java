@@ -1,5 +1,6 @@
 package com.harpz.androidvalidator.Validation.testValidation;
 
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
 
@@ -15,28 +16,55 @@ public class NameTest {
     String namepattern = "[a-zA-Z ]+";
 
 
-    public void checkValid(final EditText eName){
+    public void checkValid(final EditText eName, final String message, final TextInputLayout til){
 
         if(eName != null) {
 
-            eName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if(!hasFocus){
-                        final String check = eName.getText().toString().trim();
+            if(til != null) {
+                til.setErrorEnabled(false);
+                eName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            final String check = eName.getText().toString().trim();
 
-                        if (!namevalidation(check)) {
-                            eName.setError("Please enter valid Name.");
-                            eName.requestFocus();
-                        } else {
-                            eName.setError(null);
-                            eName.setFocusable(false);
+                            if (!namevalidation(check)) {
+                                til.setErrorEnabled(true);
+                                til.setError(message);
+
+                            } else {
+                                til.setErrorEnabled(false);
+                                til.setError(null);
+                            }
+
                         }
-
                     }
-                }
-            });
+                });
 
+            }else{
+
+                eName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            final String check = eName.getText().toString().trim();
+
+                            if (!namevalidation(check)) {
+
+                                eName.setError("Please enter valid Name.");
+                            } else {
+                                eName.setError(null);
+
+                            }
+
+                        }
+                    }
+                });
+
+            }
+
+        }else{
+            throw new NullPointerException("Validator : Field is null");
         }
 
     }

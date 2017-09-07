@@ -1,5 +1,6 @@
 package com.harpz.androidvalidator.Validation.testValidation;
 
+import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
 
@@ -11,18 +12,59 @@ public class PasswordTest {
 
 
 
-    public void checkValid(final EditText ePassword){
+    public void checkValid(final EditText ePassword, final String message, final TextInputLayout til){
         if(ePassword != null) {
 
-            ePassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if(!hasFocus){
-                              chkpwd(ePassword);
-                      }
-                }
-            });
+            if(til != null) {
 
+                til.setErrorEnabled(false);
+                ePassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+                            final String check = ePassword.getText().toString().trim();
+
+                            if(check.isEmpty()){
+                                til.setErrorEnabled(true);
+                                til.setError("Please enter Password.");
+
+
+                            }else if(!chkpwd(check)){
+                                til.setErrorEnabled(true);
+                                til.setError("Please enter Password minimum 8 Character");
+
+                            } else {
+                                til.setErrorEnabled(false);
+                                til.setError(null);
+                            }
+
+                        }
+                    }
+                });
+
+            }else {
+
+                ePassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (!hasFocus) {
+
+                            String check = ePassword.getText().toString().trim();
+
+                            if(check.isEmpty()) {
+                                ePassword.setError("Please enter Password");
+                            }else if(!chkpwd(ePassword.getText().toString())){
+                                ePassword.setError("Please enter Password minimum 8 Character");
+                            }else {
+                                ePassword.setError(null);
+                            }
+                        }
+                    }
+                });
+            }
+
+        }else{
+            throw new NullPointerException("Validator : Field is null");
         }
 
 
@@ -34,22 +76,13 @@ public class PasswordTest {
 
 
 
-    public boolean chkpwd(EditText ePassword) {
 
-        if(ePassword.getText().length() == 0){
+    public boolean chkpwd(String sPassword) {
 
-            ePassword.setError("Please enter Password");
-            ePassword.requestFocus();
-            return false;
-        }else if(ePassword.length() <6){
-
-            ePassword.setError("Please enter Password minimum 8 Character");
-            ePassword.requestFocus();
+       if(sPassword.length() <6){
             return false;
         }
 
-        ePassword.setError(null);
-        ePassword.setFocusable(false);
        return true;
     }
 
