@@ -20,6 +20,29 @@ More are coming soon...
 
 How to use?
 
+
+Step 1:
+
+Project Gradle 
+
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+Step 2:
+
+Add the dependency
+
+	dependencies {
+	        compile 'com.github.harpzzz:Android-Validator:v0.2'
+	}
+
+
+Step 3:
+
     @Email
     private EditText etEmail;
 
