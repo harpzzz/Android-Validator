@@ -1,7 +1,6 @@
-package com.harpz.androidvalidator.Validation.testValidation;
+package com.harpz.androidvalidator.testValidator;
 
 import android.support.design.widget.TextInputLayout;
-import android.view.View;
 import android.widget.EditText;
 
 /**
@@ -12,18 +11,15 @@ public class EmailTest {
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-    public void checkValid(final EditText email, final String message, final TextInputLayout til){
+    public boolean checkValid(final EditText email, final String message, final TextInputLayout til){
 
         if(email != null) {
 
+            String check = email.getText().toString().trim();
+
             if(til != null){
 
-                til.setErrorEnabled(false);
-                email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus) {
-                            final String check = email.getText().toString().trim();
+                            til.setErrorEnabled(false);
 
                             if (!emailValidation(check)) {
                                 til.setErrorEnabled(true);
@@ -32,29 +28,17 @@ public class EmailTest {
                                 til.setError(null);
                                 til.setErrorEnabled(false);
                             }
-
-                        }
-                    }
-                });
-
             }else {
-
-                email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus) {
-                            final String check = email.getText().toString().trim();
-
                             if (!emailValidation(check)) {
                                 email.setError(message);
                             } else {
                                 email.setError(null);
                             }
 
-                        }
-                    }
-                });
             }
+
+
+            return emailValidation(check);
 
         }else{
 

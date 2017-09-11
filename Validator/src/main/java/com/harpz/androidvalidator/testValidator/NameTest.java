@@ -1,7 +1,6 @@
-package com.harpz.androidvalidator.Validation.testValidation;
+package com.harpz.androidvalidator.testValidator;
 
 import android.support.design.widget.TextInputLayout;
-import android.view.View;
 import android.widget.EditText;
 
 import java.util.regex.Matcher;
@@ -16,17 +15,13 @@ public class NameTest {
     String namepattern = "[a-zA-Z ]+";
 
 
-    public void checkValid(final EditText eName, final String message, final TextInputLayout til){
+    public boolean checkValid(final EditText eName, final String message, final TextInputLayout til){
 
         if(eName != null) {
-
+            String check = eName.getText().toString().trim();
             if(til != null) {
                 til.setErrorEnabled(false);
-                eName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus) {
-                            final String check = eName.getText().toString().trim();
+
 
                             if (!namevalidation(check)) {
                                 til.setErrorEnabled(true);
@@ -37,17 +32,9 @@ public class NameTest {
                                 til.setError(null);
                             }
 
-                        }
-                    }
-                });
 
             }else{
 
-                eName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus) {
-                            final String check = eName.getText().toString().trim();
 
                             if (!namevalidation(check)) {
 
@@ -58,10 +45,9 @@ public class NameTest {
                             }
 
                         }
-                    }
-                });
 
-            }
+
+                        return namevalidation(check);
 
         }else{
             throw new NullPointerException("Validator : Field is null");

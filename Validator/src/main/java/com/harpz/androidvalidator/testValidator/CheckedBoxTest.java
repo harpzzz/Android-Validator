@@ -1,4 +1,4 @@
-package com.harpz.androidvalidator.Validation.testValidation;
+package com.harpz.androidvalidator.testValidator;
 
 import android.util.Log;
 import android.widget.CheckBox;

@@ -1,7 +1,6 @@
-package com.harpz.androidvalidator.Validation.testValidation;
+package com.harpz.androidvalidator.testValidator;
 
 import android.support.design.widget.TextInputLayout;
-import android.view.View;
 import android.widget.EditText;
 
 /**
@@ -12,17 +11,15 @@ public class PasswordTest {
 
 
 
-    public void checkValid(final EditText ePassword, final String message, final TextInputLayout til){
+    public boolean checkValid(final EditText ePassword, final String message, final TextInputLayout til){
+
         if(ePassword != null) {
+            final String check = ePassword.getText().toString().trim();
 
             if(til != null) {
 
                 til.setErrorEnabled(false);
-                ePassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus) {
-                            final String check = ePassword.getText().toString().trim();
+
 
                             if(check.isEmpty()){
                                 til.setErrorEnabled(true);
@@ -38,19 +35,10 @@ public class PasswordTest {
                                 til.setError(null);
                             }
 
-                        }
-                    }
-                });
+
+
 
             }else {
-
-                ePassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (!hasFocus) {
-
-                            String check = ePassword.getText().toString().trim();
-
                             if(check.isEmpty()) {
                                 ePassword.setError("Please enter Password");
                             }else if(!chkpwd(ePassword.getText().toString())){
@@ -58,10 +46,9 @@ public class PasswordTest {
                             }else {
                                 ePassword.setError(null);
                             }
-                        }
-                    }
-                });
             }
+
+            return chkpwd(ePassword.getText().toString());
 
         }else{
             throw new NullPointerException("Validator : Field is null");
@@ -79,11 +66,11 @@ public class PasswordTest {
 
     public boolean chkpwd(String sPassword) {
 
-       if(sPassword.length() <6){
-            return false;
+       if(sPassword.length() > 7){
+            return true;
         }
 
-       return true;
+       return false;
     }
 
 }
