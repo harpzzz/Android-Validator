@@ -43,14 +43,18 @@ Add the dependency
 
 Step 3:
 
-    @Email
+    public class MainActivity extends AppCompatActivity implements ValidatorListener {
+
+    @Email(til = R.id.tilEmail)
     private EditText etEmail;
 
-    @Name
+    @Name(message = "Name is not valid", til = R.id.tilName)
     private EditText etName;
 
-    @Password
+    @Password(message = "Name is not valid", til = R.id.tilPassword)
     private EditText etPassword;
+
+    Button btnSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +65,33 @@ Step 3:
         etName = (EditText) findViewById(R.id.edName);
         etPassword = (EditText) findViewById(R.id.edPassword);
 
+        final Validator validator = new Validator(this);
 
-    // Write this two line after all views are bind
-    Validator validator = new Validator();
-    validator.Validator(this);
+
+        checkbox = (CheckBox) findViewById(R.id.checkbox);
+
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validator.validate();
+            }
+        });
+
+    }
+
+    @Override
+    public void onValidateSuccess() {
+        Toast.makeText(this, "All Validate done properly", Toast.LENGTH_SHORT).show();
+	//do your task 
+    }
+
+    @Override
+    public void onValidateFailed(ArrayList<EditText> list) {
+	//list of all failed editext
+
+    }
 
 
 ## **License**
