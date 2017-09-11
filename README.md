@@ -37,8 +37,9 @@ Step 2:
 Add the dependency
 
 	dependencies {
-	        compile 'com.github.harpzzz:Android-Validator:v0.2'
+	        compile 'com.github.harpzzz:Android-Validator:v1.0'
 	}
+
 
 
 Step 3:
