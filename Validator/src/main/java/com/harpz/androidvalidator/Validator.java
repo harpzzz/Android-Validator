@@ -3,14 +3,21 @@ package com.harpz.androidvalidator;
 
 import android.app.Activity;
 import android.support.design.widget.TextInputLayout;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.harpz.androidvalidator.testValidator.EmailTest;
 import com.harpz.androidvalidator.testValidator.NameTest;
 import com.harpz.androidvalidator.testValidator.PasswordTest;
+import com.harpz.androidvalidator.testValidator.RadioGroupTest;
+import com.harpz.androidvalidator.validatorAnnotations.Checked;
 import com.harpz.androidvalidator.validatorAnnotations.Email;
 import com.harpz.androidvalidator.validatorAnnotations.Name;
 import com.harpz.androidvalidator.validatorAnnotations.Password;
+import com.harpz.androidvalidator.validatorAnnotations.RadioCheck;
+
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -21,7 +28,7 @@ import java.util.ArrayList;
 public class Validator {
 
     Activity activity;
-    ArrayList<EditText> alEditText = new ArrayList<>();
+    ArrayList<Object> alErrorView = new ArrayList<>();
 
     public Validator(Activity activity) {
         this.activity = activity;
@@ -30,7 +37,7 @@ public class Validator {
     public void validate(){
 
 
-        alEditText.clear();
+        alErrorView.clear();
         Class cl = activity.getClass();
 
         Field[] fd = cl.getDeclaredFields();
@@ -51,7 +58,7 @@ public class Validator {
                     EditText edEmail = (EditText) field.get(activity);
 
                         if(!new EmailTest().checkValid(edEmail,iEmail.message(),tvInputLayout)){
-                            alEditText.add(edEmail);
+                            alErrorView.add(edEmail);
                         }
 
             }else if(field.isAnnotationPresent(Name.class)){
@@ -62,7 +69,7 @@ public class Validator {
                 TextInputLayout tvInputLayout = (TextInputLayout) activity.findViewById(iName.til());
                 EditText edName = (EditText) field.get(activity);
                 if(!new NameTest().checkValid(edName,iName.message(),tvInputLayout)){
-                    alEditText.add(edName);
+                    alErrorView.add(edName);
 
                 }
             }else if(field.isAnnotationPresent(Password.class)){
@@ -73,9 +80,9 @@ public class Validator {
                 TextInputLayout tvInputLayout = (TextInputLayout) activity.findViewById(iPassword.til());
                 EditText edPassword = (EditText) field.get(activity);
                 if(!new PasswordTest().checkValid(edPassword,iPassword.message(),tvInputLayout)){
-                    alEditText.add(edPassword);
+                    alErrorView.add(edPassword);
                 }
-            }/*else if(field.isAnnotationPresent(Checked.class)){
+            }else if(field.isAnnotationPresent(Checked.class)){
                 field.setAccessible(true);
 
                 Annotation annotation = field.getAnnotation(Checked.class);
@@ -85,14 +92,27 @@ public class Validator {
                     CheckBox checkBox = (CheckBox) field.get(activity);
                     if(!checkBox.isChecked()){
                         Toast.makeText(activity, iChecked.message(), Toast.LENGTH_SHORT).show();
-                       // alEditText.add(checkBox);
+                        alErrorView.add(checkBox);
                     }
                 }catch (ClassCastException ex){
                     ex.printStackTrace();
                 }
 
 
-            }*/
+            }else if(field.isAnnotationPresent(RadioCheck.class)){
+                field.setAccessible(true);
+
+                Annotation annotation = field.getAnnotation(RadioCheck.class);
+                RadioCheck iRadioGroup = (RadioCheck) annotation;
+
+                RadioGroup radioGroup = (RadioGroup) field.get(activity);
+                RadioGroupTest radioGroupTest = new RadioGroupTest();
+                    if(radioGroupTest.checkRadio(radioGroup)){
+                        Toast.makeText(activity, iRadioGroup.message(), Toast.LENGTH_SHORT).show();
+                        alErrorView.add(radioGroup);
+                    }
+
+            }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (NullPointerException e){
@@ -102,8 +122,8 @@ public class Validator {
 
             ValidatorListener validatorListener = (ValidatorListener) activity;
 
-            if(alEditText.size() > 0) {
-                validatorListener.onValidateFailed(alEditText);
+            if(alErrorView.size() > 0) {
+                validatorListener.onValidateFailed(alErrorView);
             }else {
                 validatorListener.onValidateSuccess();
             }

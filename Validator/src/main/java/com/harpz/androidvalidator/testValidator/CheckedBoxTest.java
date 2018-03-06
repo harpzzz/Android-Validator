@@ -6,20 +6,22 @@ import android.widget.CheckBox;
 
 
 public class CheckedBoxTest {
-    public void checkValid(CheckBox checkBox,String message) {
+    public boolean checkValid(CheckBox checkBox) {
 
 
         if(checkBox != null){
 
-            if(!checkBox.isChecked()){
-
-                Log.i("checkbox",message);
+            if(checkBox.isChecked()){
+                return true;
               }
+
+            return false;
 
         }else{
             throw new NullPointerException("Validator : Field is null");
 
         }
+
 
 
     }
