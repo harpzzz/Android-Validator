@@ -89,8 +89,8 @@ Step 3:
     }
 
     @Override
-    public void onValidateFailed(ArrayList<EditText> list) {
-	//list of all failed editext
+    public void onValidateFailed(ArrayList list) {
+	//list of all failed
 
     }
 
