@@ -7,6 +7,8 @@ There are some Annotation are
 *  @Email //for email validation  
 *  @Name  //for Name validation 
 *  @Password // for Password min character length 8
+*  @Checked // for Checkbox validation
+*  @RadioCheck // for RadioGroup validation
 
 With TextInputLayout and Custom Text
 
