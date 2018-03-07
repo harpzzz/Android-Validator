@@ -9,11 +9,13 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.harpz.androidvalidator.testValidator.EmailTest;
+import com.harpz.androidvalidator.testValidator.MobileTest;
 import com.harpz.androidvalidator.testValidator.NameTest;
 import com.harpz.androidvalidator.testValidator.PasswordTest;
 import com.harpz.androidvalidator.testValidator.RadioGroupTest;
 import com.harpz.androidvalidator.validatorAnnotations.Checked;
 import com.harpz.androidvalidator.validatorAnnotations.Email;
+import com.harpz.androidvalidator.validatorAnnotations.Mobile;
 import com.harpz.androidvalidator.validatorAnnotations.Name;
 import com.harpz.androidvalidator.validatorAnnotations.Password;
 import com.harpz.androidvalidator.validatorAnnotations.RadioCheck;
@@ -111,6 +113,21 @@ public class Validator {
                         Toast.makeText(activity, iRadioGroup.message(), Toast.LENGTH_SHORT).show();
                         alErrorView.add(radioGroup);
                     }
+
+            }else if(field.isAnnotationPresent(Mobile.class)){
+                field.setAccessible(true);
+
+                Annotation annotation = field.getAnnotation(Mobile.class);
+                Mobile iMobile = (Mobile) annotation;
+
+                EditText edMobile = (EditText) field.get(activity);
+                MobileTest mobileTest = new MobileTest();
+
+                TextInputLayout tvInputLayout = (TextInputLayout) activity.findViewById(iMobile.til());
+
+                if(!mobileTest.mobileNumValid(edMobile, iMobile.message(),iMobile.regex(),tvInputLayout)){
+                    alErrorView.add(edMobile);
+                }
 
             }
             } catch (IllegalAccessException e) {

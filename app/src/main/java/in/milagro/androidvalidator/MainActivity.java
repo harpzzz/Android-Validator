@@ -13,6 +13,7 @@ import com.harpz.androidvalidator.Validator;
 import com.harpz.androidvalidator.ValidatorListener;
 import com.harpz.androidvalidator.validatorAnnotations.Checked;
 import com.harpz.androidvalidator.validatorAnnotations.Email;
+import com.harpz.androidvalidator.validatorAnnotations.Mobile;
 import com.harpz.androidvalidator.validatorAnnotations.Name;
 import com.harpz.androidvalidator.validatorAnnotations.Password;
 import com.harpz.androidvalidator.validatorAnnotations.RadioCheck;
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements ValidatorListener
 
     @Password(message = "Name is not valid", til = R.id.tilPassword)
     private EditText etPassword;
+
+    @Mobile(til = R.id.tilMobile)
+    private EditText etMobile;
 
     @Checked
     private CheckBox checkbox;
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements ValidatorListener
         etEmail = (EditText) findViewById(R.id.edEmail);
         etName = (EditText) findViewById(R.id.edName);
         etPassword = (EditText) findViewById(R.id.edPassword);
+        etMobile = (EditText) findViewById(R.id.edMobile);
 
         final Validator validator = new Validator(this);
 

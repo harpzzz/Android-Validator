@@ -1,6 +1,5 @@
 package com.harpz.androidvalidator.testValidator;
 
-import android.widget.EditText;
 import android.widget.RadioGroup;
 
 /**

@@ -53,6 +53,19 @@
         </android.support.design.widget.TextInputLayout>
 
 
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilMobile"
+            android:hint="Mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/edMobile"
+                />
+        </android.support.design.widget.TextInputLayout>
+
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,7 +80,8 @@
             <RadioButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rb1"/>
+                android:id="@+id/rb1"
+                android:text="Radio"/>
 
         </RadioGroup>
 
@@ -80,6 +94,8 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:background="@color/colorPrimaryDark"/>
+
+
 
     </LinearLayout>
 
