@@ -7,6 +7,8 @@ There are some Annotation are
 *  @Email //for email validation  
 *  @Name  //for Name validation 
 *  @Password // for Password min character length 8
+*  @Checked // for Checkbox validation
+*  @RadioCheck // for RadioGroup validation
 
 With TextInputLayout and Custom Text
 
@@ -89,8 +91,8 @@ Step 3:
     }
 
     @Override
-    public void onValidateFailed(ArrayList<EditText> list) {
-	//list of all failed editext
+    public void onValidateFailed(ArrayList list) {
+	//list of all failed
 
     }
 
